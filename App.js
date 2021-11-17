@@ -1,48 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl } from 'react-native';
 
 export default function App() {
-  const [state, setState] = useState('Hello')
-  console.log('!');
-  const onChange = () => {
-    console.log('111');
-    setState('Hello Roman!')
+
+  const [refrech, setRefresh] = useState(false)
+
+  const [state, setState] = useState([
+    {key: 1, number: '1'},
+    {key: 2, number: '2'},
+    {key: 3, number: '3'},
+    {key: 4, number: '4'},
+    {key: 5, number: '5'},
+    {key: 6, number: '6'},
+    {key: 7, number: '7'},
+    {key: 8, number: '8'},
+    {key: 9, number: '9'},
+
+  ])
+  const onRefresh = () => {
+    setRefresh(true);
+    setState([...state, {key: 10, number: '10'}]);
+    setRefresh(false)
   }
   return (
     <View style={styles.container}>
-      <Button title='wikipedia' onPress={() => {Linking.openURL('https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0') }}/>
-      <View style={styles.text}>
-      <Text>{state}</Text>
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refrech} onRefresh={onRefresh}/>
+      }>
+      {
+        state.map((item) => {
+          return (
+      <View style={styles.item}>
+        <Text style={styles.text} key={item.key}>{item.number}</Text>
       </View>
-      <View>
-      <Button title='update state' onPress={onChange}/>
-      </View>
-      <StatusBar style="auto" />
+        )})
+      }
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '50%',
     backgroundColor: 'orange',
-    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  item: {
+    backgroundColor: 'violet',
     justifyContent: 'center',
-    borderWidth: 10,
-    borderColor: 'blue',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    alignItems: 'center',
+    margin: 5,
   },
   text: {
     color: 'white',
     fontSize: 40,
-    fontFamily: 'italic',
     margin: 10,
-    textTransform: 'uppercase'
   },
-  button: {
-
-  }
 });
