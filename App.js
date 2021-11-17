@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList } from 'react-native';
 
 export default function App() {
 
@@ -18,38 +18,42 @@ export default function App() {
     {key: '9', number: '9'},
 
   ])
+
+  const Data = [
+    {title: 'title 1', data: ['item 1-1', 'item 1-2', 'item 1-3']},
+    {title: 'title 2', data: ['item 2-1', 'item 2-2', 'item 2-3']},
+    {title: 'title 3', data: ['item 3-1', 'item 3-2', 'item 3-3']},
+    {title: 'title 4', data: ['item 4-1', 'item 4-2', 'item 4-3']}
+  ]
   const onRefresh = () => {
     setRefresh(true);
     setState([...state, {key: 10, number: '10'}]);
     setRefresh(false)
   }
   return (
-    <View>
-      <FlatList data={state} renderItem={({item}) => 
-          (
-      <View style={styles.item}>
-        <Text style={styles.text} key={item.key}>{item.number}</Text>
-      </View>
-          )} 
-          refreshControl={
-                <RefreshControl refreshing={refrech} onRefresh={onRefresh}/>
-              }
-          />
-    </View>
-    // <View style={styles.container}>
-    //   <ScrollView refreshControl={
-    //     <RefreshControl refreshing={refrech} onRefresh={onRefresh}/>
-    //   }>
-    //   {
-    //     state.map((item) => {
-    //       return (
+
+      <SectionList keyExtractor={(item, index) => index.toString()}
+      sections={Data}
+      renderItem={({item}) => (
+          <Text style={styles.text}>{item}</Text>
+            )}
+            renderSectionHeader={({section}) => (
+          <View style={styles.item}>
+            <Text style={styles.text}>{section.title}</Text>
+          </View>
+          )}
+      />
+    // <View>
+    //   <FlatList data={state} renderItem={({item}) => 
+    //       (
     //   <View style={styles.item}>
     //     <Text style={styles.text} key={item.key}>{item.number}</Text>
     //   </View>
-    //     )})
-    //   }
-    //   </ScrollView>
-    // </View>
+    //       )} 
+    //       refreshControl={
+    //             <RefreshControl refreshing={refrech} onRefresh={onRefresh}/>
+    //           }
+    //       />
   );
 }
 
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 40,
     margin: 10,
   },
