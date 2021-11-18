@@ -1,33 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert, ToastAndroid, Modal } from 'react-native';
 
 export default function App() {
 
   const [name, setName] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [showWarning, setShowWarning] = useState(false)
+
 
   const onPressHandler = () => {
     if (name.length > 3) {
     setSubmitted(!submitted)
     } else {
-      // Alert.alert('Warning', 'The name must be longer than 3 characters', [
-      //   { text: "Don't show me again", onPress: () => console.warn("Don't show me again Pressed!")},
-      //   { text: 'Cancel', onPress: () => console.warn('Cancel Pressed!')},
-      //   { text: 'OK', onPress: () => console.warn('OK Pressed!')}
-      // ], {cancelable: true, onDismiss: () => console.warn('Alert dismissed')})
-      ToastAndroid.showWithGravityAndOffset('The name must be longer than 3 characters',
-      ToastAndroid.LONG,
-      ToastAndroid.TOP,
-      100,
-      100
-      )
+    setShowWarning(true)
     }
   }
 
  
   return (
     <View style={styles.container}>
+      <Modal
+       visible={showWarning}
+       onRequestClose={() => setShowWarning(false)}
+       transparent={true}
+       >
+         <View style={styles.centered_view}>
+           <View style={styles.warning_modal}>
+           <View style={styles.warning_title}>
+             <Text style={styles.text}>
+               WARNING
+             </Text>
+           </View>
+                <Text>The text must have longer than 3 characters</Text>
+                <Pressable style={styles.warning_button} onPress={() => setShowWarning(false)}>
+                  <Text>
+                    OK
+                  </Text>
+                </Pressable>
+           </View>
+         </View>
+      </Modal>
       <Text style={styles.text}>
         Please write your name:
       </Text>
@@ -52,8 +65,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'orange',
-    flexDirection: 'column'
+    flex: 1,
+    backgroundColor: '#ffffff',
+    alignItems: 'center'
   },
   item: {
     backgroundColor: 'violet',
@@ -64,7 +78,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 40,
-    margin: 10,
   },
   input: {
     padding: 10,
@@ -74,5 +87,31 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 30
+  },
+  centered_view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000099'
+  },
+  warning_modal: {
+    width: 300,
+    height: 300,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 20
+  },
+  warning_title: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ff0',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20
+  },
+  warning_button: {
+    alignItems: 'center',
+    marginTop: 130
   }
 });
