@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable } from 'react-native';
 
 export default function App() {
 
@@ -19,11 +19,12 @@ export default function App() {
       </Text>
       <TextInput style={styles.input} placeholder='name' onChangeText={(value) => setName(value)}/>
       {/* <Button title={submitted ? 'Clear' : 'Submit'} onPress={onPressHandler} /> */}
-      <TouchableHighlight onPress={onPressHandler} style={styles.button} activeOpacity={0.5} underlayColor='green'>
+      <Pressable onPress={onPressHandler} hitSlop={{top: 10, bottom: 10, right: 10, left: 10}} style={({pressed}) => [styles.button, {
+    backgroundColor: pressed ? 'green' : 'blue'}]}>
         <Text style={styles.text}>
         {submitted ? 'Clear' : 'Submit'}
         </Text>
-      </TouchableHighlight>
+      </Pressable>
       {submitted ?
       <Text>
         Your name is: {name}
@@ -58,6 +59,6 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   button: {
-    backgroundColor: 'blue'
+    marginTop: 30
   }
 });
