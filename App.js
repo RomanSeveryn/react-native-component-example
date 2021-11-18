@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert, ToastAndroid, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert, ToastAndroid, Modal, Image } from 'react-native';
 
 export default function App() {
 
@@ -38,6 +38,7 @@ export default function App() {
                     OK
                   </Text>
                 </Pressable>
+                
            </View>
          </View>
       </Modal>
@@ -53,11 +54,16 @@ export default function App() {
         </Text>
       </Pressable>
       {submitted ?
-      <Text>
+      <View>
+        <Text>
         Your name is: {name}
       </Text>
+      </View>
+      
+      
       :
-      null
+      <Image style={styles.image} source={require('./assets/audi.png')}/>
+      // <Image style={styles.image} resizeMode='stretch' source={{uri: 'https://carta.com/wp-content/uploads/2019/08/axios.png'}}/>
       }
     </View>
   );
@@ -113,5 +119,9 @@ const styles = StyleSheet.create({
   warning_button: {
     alignItems: 'center',
     marginTop: 130
+  },
+  image: {
+    width: 150,
+    height: 150
   }
 });
