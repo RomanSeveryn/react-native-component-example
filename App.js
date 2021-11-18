@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Linking, ScrollView, RefreshControl, FlatList, SectionList, TextInput, TouchableOpacity, TouchableHighlight, Pressable, Alert, ToastAndroid } from 'react-native';
 
 export default function App() {
 
@@ -11,11 +11,17 @@ export default function App() {
     if (name.length > 3) {
     setSubmitted(!submitted)
     } else {
-      Alert.alert('Warning', 'The name must be longer than 3 characters', [
-        { text: "Don't show me again", onPress: () => console.warn("Don't show me again Pressed!")},
-        { text: 'Cancel', onPress: () => console.warn('Cancel Pressed!')},
-        { text: 'OK', onPress: () => console.warn('OK Pressed!')}
-      ], {cancelable: true, onDismiss: () => console.warn('Alert dismissed')})
+      // Alert.alert('Warning', 'The name must be longer than 3 characters', [
+      //   { text: "Don't show me again", onPress: () => console.warn("Don't show me again Pressed!")},
+      //   { text: 'Cancel', onPress: () => console.warn('Cancel Pressed!')},
+      //   { text: 'OK', onPress: () => console.warn('OK Pressed!')}
+      // ], {cancelable: true, onDismiss: () => console.warn('Alert dismissed')})
+      ToastAndroid.showWithGravityAndOffset('The name must be longer than 3 characters',
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+      100,
+      100
+      )
     }
   }
 
