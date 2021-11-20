@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 export default   function ScreenA({navigation}) {
   
     const onPressHandler = () => {
-      navigation.navigate('Screen_B')
+      navigation.openDrawer()
     }
     return (
       <View style={styles.body}>
@@ -16,7 +16,7 @@ export default   function ScreenA({navigation}) {
          onPress={onPressHandler}
          >
           <Text style={styles.text}>
-            Go to Screen B
+            Toggle Drawer
           </Text>
         </Pressable>
       </View>

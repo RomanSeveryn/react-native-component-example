@@ -5,46 +5,46 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ScreenA from './ScreenA';
 import ScreenB from './ScreenB';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-// const Tab = createBottomTabNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 
 
 export default function App() {
-
-  
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Screen_A') {
-              iconName = 'car';
-              size = focused ? 25 : 30;
-            } else if (route.name === 'Screen_B') {
-              iconName = 'settings';
-              size = focused ? 25 : 30;
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-        barStyle={{backgroundColor: '#694fad'}}
+      <Drawer.Navigator
+      initialRouteName="Screen_A"
+      hideStatusBar={true}
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#0080ff'
+        },
+        headerTintColor: '#ffffff'
+      }
+    
+    }
       >
-        <Tab.Screen
+        <Drawer.Screen
         name="Screen_A"
         component={ScreenA}
-        options={{tabBarBadge: 3}}
+        options={{
+          title: 'Screen_A Title',
+          drawerIcon: () => {
+            <FontAwesome5
+            name='home'
+            />
+          }
+        }}
+        initialParams={{itemName: 'Item', itemId: 42 }}
           />
-        <Tab.Screen
+        <Drawer.Screen
         name="Screen_B"
         component={ScreenB}/>
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
