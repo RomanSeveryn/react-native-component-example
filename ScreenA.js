@@ -1,7 +1,16 @@
 import React, {useState} from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 
 export default   function ScreenA({navigation}) {
+
+  const [loaded] = useFonts({
+    Comforter: require('./assets/fonts/Comforter-Regular.ttf')})
+  
+  if (!loaded) {
+    return null;
+  }
   
     const onPressHandler = () => {
       navigation.openDrawer()
@@ -31,7 +40,7 @@ export default   function ScreenA({navigation}) {
     },
      text: {
        fontSize: 40,
-       fontWeight: 'bold',
-       margin: 10
+       margin: 10,
+       fontFamily: 'Comforter'
      }
   })
